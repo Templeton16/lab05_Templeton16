@@ -18,10 +18,14 @@ def main():
 
     args = parser.parse_args()
 
-    # TODO: open args.filename and read it with csv.reader. The first row is the
-    #   header. Find the position of args.column within the header, then print every
-    #   data row (its values joined by commas) whose value in that column equals
-    #   args.value.
+    with open(args.filename, newline="") as file:
+        rows = list(csv.reader(file))
+
+    header = rows[0]
+    column_index = header.index(args.column)
+    for row in rows[1:]:
+        if row[column_index] == args.value:
+            print(",".join(row))
 
 
 if __name__ == "__main__":
